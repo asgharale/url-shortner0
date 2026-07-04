@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+load_dotenv(BASE_DIR / ".env")
 
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-in-production")
-DEBUG = os.environ.get("DJANGO_DEBUG", "True") == "True"
+DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
     "kootaher.ir",
@@ -31,7 +33,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -73,21 +74,26 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_URL = "/static/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Nuxt dev server (default port 3000) calling the API during local dev.
-# In production, Nuxt is built statically and served by WhiteNoise from this
-# same Django process, so it's same-origin and CORS doesn't matter there.
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-]
-
+# Fallback only — actual short links are built per-request domain (see serializers.py)
 SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://kootaher.ir")
 
-# Serve the built Nuxt app (frontend/.output/public after `nuxt generate`,
-# or frontend/dist if you use `nuxt build` + a static preset) via WhiteNoise.
-FRONTEND_DIST_DIR = BASE_DIR.parent / "frontend" / "dist"
-WHITENOISE_ROOT = FRONTEND_DIST_DIR if FRONTEND_DIST_DIR.exists() else None
-WHITENOISE_INDEX_FILE = True
+CORS_ALLOWED_ORIGINS = os.environ.get(
+    "CORS_ALLOWED_ORIGINS",
+    "https://kootaher.ir,https://www.kootaher.ir,"
+    "https://mini2.ir,https://www.mini2.ir,"
+    "https://tny2.ir,https://www.tny2.ir",
+).split(",")
+
+CSRF_TRUSTED_ORIGINS = os.environ.get(
+    "CSRF_TRUSTED_ORIGINS",
+    "https://kootaher.ir,https://www.kootaher.ir,"
+    "https://mini2.ir,https://www.mini2.ir,"
+    "https://tny2.ir,https://www.tny2.ir",
+).split(",")
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
