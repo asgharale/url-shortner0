@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: "fa", dir: "rtl" },
-      title: "کوتاهر — کوتاه‌کننده لینک",
+      title: "کوتاه‌کننده لینک",
       meta: [
         { name: "description", content: "لینک بلندت رو کوتاه کن و راحت به اشتراک بذار." },
       ],

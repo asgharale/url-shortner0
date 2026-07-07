@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 
-const DOMAINS = ["kootaher.ir", "mini2.ir", "tny2.ir"];
+const DOMAINS = ["mini2.ir", "tny2.ir"];
 
 const url = ref("");
 const shortUrl = ref("");
@@ -121,7 +121,7 @@ async function copyLink() {
         </transition>
       </div>
 
-      <footer class="footer">kootaher.ir · mini2.ir · tny2.ir</footer>
+      <footer class="footer">mini2.ir · tny2.ir</footer>
     </div>
   </div>
 </template>

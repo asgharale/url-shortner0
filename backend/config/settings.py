@@ -9,8 +9,6 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-in-produ
 DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    "kootaher.ir",
-    "www.kootaher.ir",
     "mini2.ir",
     "www.mini2.ir",
     "tny2.ir",
