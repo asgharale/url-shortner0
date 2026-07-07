@@ -1,4 +1,4 @@
-from django.conf import settings
+from django.db.models import F
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -18,6 +18,7 @@ def shorten_url(request):
     original_url = serializer.validated_data["url"]
     chosen_domain = serializer.validated_data.get("domain", "").strip()
 
+    from django.conf import settings
     if chosen_domain and chosen_domain not in settings.ALLOWED_SHORT_DOMAINS:
         return Response(
             {"domain": [f"'{chosen_domain}' is not an allowed domain."]},
@@ -36,6 +37,6 @@ def shorten_url(request):
 
 def redirect_short_code(request, short_code):
     link = get_object_or_404(Link, short_code=short_code)
-    link.clicks += 1
-    link.save(update_fields=["clicks"])
-    return redirect(link.original_url)
+    destination = link.original_url
+    Link.objects.filter(pk=link.pk).update(clicks=F("clicks") + 1)
+    return redirect(destination)

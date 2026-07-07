@@ -14,7 +14,7 @@ class LinkAdmin(admin.ModelAdmin):
     list_display = ("short_code", "original_url", "clicks", "created_at")
     search_fields = ("short_code", "original_url")
     list_filter = ("created_at",)
-    ordering = ("-created_at",)
+    ordering = ("-clicks",)   # most-clicked links first — handy now that clicks is the main metric
     actions = ["bulk_update_url"]
 
     @admin.action(description="Update original URL for selected links")
