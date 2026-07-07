@@ -14,7 +14,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(160deg, #eef0fb 0%, #f7f7fb 60%);
+  background: linear-gradient(160deg, #f0faf7 0%, #eef4fb 100%);
   padding: 1.5rem;
 }
 
@@ -32,13 +32,13 @@ body {
 }
 
 .logo {
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
-  color: #3730a3;
+  color: #0d9488;
 }
 
 .tagline {
-  color: #8888a0;
+  color: #6b7a87;
   font-size: 0.9rem;
   margin-top: 0.25rem;
 }
@@ -46,19 +46,19 @@ body {
 .card {
   background: #fff;
   padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(50, 50, 100, 0.08);
+  border-radius: 18px;
+  box-shadow: 0 10px 40px rgba(13, 148, 136, 0.08);
 }
 
 h1 {
   margin: 0 0 0.35rem;
   font-size: 1.4rem;
-  color: #1f1f2e;
+  color: #12332e;
 }
 
 .subtitle {
   margin: 0 0 1.5rem;
-  color: #71718a;
+  color: #6b7a87;
   font-size: 0.95rem;
   line-height: 1.7;
 }
@@ -72,22 +72,24 @@ input {
   flex: 1;
   min-width: 0;
   padding: 0.75rem 0.9rem;
-  border: 1.5px solid #e2e2ef;
+  border: 1.5px solid #dbe6e3;
   border-radius: 10px;
   font-size: 1rem;
   font-family: inherit;
+  background: #fafdfc;
 }
 
 input:focus {
   outline: none;
-  border-color: #4f46e5;
+  border-color: #0d9488;
+  background: #fff;
 }
 
 button[type="submit"] {
   padding: 0.75rem 1.4rem;
   border: none;
   border-radius: 10px;
-  background: #4338ca;
+  background: #0d9488;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 700;
@@ -97,6 +99,11 @@ button[type="submit"] {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  transition: background 0.15s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background: #0b7e73;
 }
 
 button[type="submit"]:disabled {
@@ -120,6 +127,10 @@ button[type="submit"]:disabled {
 
 .error {
   color: #c0392b;
+  background: #fdf0ef;
+  border: 1px solid #f5d5d2;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
   margin: 0.9rem 0 0;
   font-size: 0.9rem;
   line-height: 1.7;
@@ -127,8 +138,8 @@ button[type="submit"]:disabled {
 
 .result {
   margin-top: 1.4rem;
-  background: #f4f4ff;
-  border: 1px solid #e3e3fb;
+  background: #f0faf8;
+  border: 1px solid #d3ede7;
   border-radius: 12px;
   padding: 1rem 1.1rem;
 }
@@ -142,7 +153,7 @@ button[type="submit"]:disabled {
 }
 
 .short-link {
-  color: #4338ca;
+  color: #0d9488;
   font-weight: 700;
   font-size: 1.05rem;
   word-break: break-all;
@@ -157,8 +168,8 @@ button[type="submit"]:disabled {
 
 .icon-btn {
   background: #fff;
-  color: #4338ca;
-  border: 1.5px solid #4338ca;
+  color: #0d9488;
+  border: 1.5px solid #0d9488;
   padding: 0.35rem 0.9rem;
   font-size: 0.82rem;
   border-radius: 8px;
@@ -171,7 +182,7 @@ button[type="submit"]:disabled {
 
 .original-hint {
   margin: 0.6rem 0 0;
-  color: #8888a0;
+  color: #6b7a87;
   font-size: 0.82rem;
   word-break: break-all;
   text-align: left;
@@ -179,7 +190,7 @@ button[type="submit"]:disabled {
 
 .footer {
   text-align: center;
-  color: #b5b5c9;
+  color: #a9b8c2;
   font-size: 0.8rem;
   margin-top: 1.5rem;
 }

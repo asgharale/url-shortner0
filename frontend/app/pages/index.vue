@@ -15,7 +15,7 @@ async function shorten() {
 
   const trimmed = url.value.trim();
   if (!trimmed) {
-    error.value = "لطفاً یک آدرس وارد کنید.";
+    error.value = "لطفاً یک آدرس وارد کن.";
     return;
   }
 
@@ -30,9 +30,17 @@ async function shorten() {
     url.value = "";
   } catch (e: any) {
     console.error("shorten failed:", e);
-    error.value =
-      e?.data?.url?.[0] ||
-      "آدرس معتبر نیست یا مشکلی در سرور پیش اومد. دوباره امتحان کن.";
+
+    if (e?.data?.url) {
+      // Real validation error from the backend
+      error.value = "آدرس وارد شده معتبر نیست. حتماً با http:// یا https:// شروع بشه.";
+    } else if (e?.status) {
+      // Backend responded, but with an unexpected error code
+      error.value = `مشکلی در سرور پیش اومد (کد ${e.status}). دوباره امتحان کن.`;
+    } else {
+      // Request never got a response at all — network/CORS/connection issue
+      error.value = "اتصال به سرور برقرار نشد. اتصال اینترنت یا وضعیت سرویس رو چک کن.";
+    }
   } finally {
     loading.value = false;
   }
@@ -64,7 +72,6 @@ async function copyLink() {
             dir="ltr"
             inputmode="url"
             autocomplete="off"
-            placeholder="https://example.com/a-very-long-link"
             :disabled="loading"
           />
           <button type="submit" :disabled="loading">
