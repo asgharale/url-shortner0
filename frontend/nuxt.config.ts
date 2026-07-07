@@ -2,6 +2,16 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-06-01",
   devtools: { enabled: true },
 
+  app: {
+    head: {
+      htmlAttrs: { lang: "fa", dir: "rtl" },
+      title: "کوتاهر — کوتاه‌کننده لینک",
+      meta: [
+        { name: "description", content: "لینک بلندت رو کوتاه کن و راحت به اشتراک بذار." },
+      ],
+    },
+  },
+
   css: ["~/assets/css/main.css"],
 
   runtimeConfig: {
@@ -10,7 +20,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // In dev, proxy /api calls to Django running on 8085
   vite: {
     server: {
       proxy: {
@@ -22,7 +31,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // `nuxt generate` outputs static files Django (WhiteNoise) can serve directly
   nitro: {
     output: {
       publicDir: "../dist",

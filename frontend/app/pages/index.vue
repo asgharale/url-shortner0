@@ -15,7 +15,7 @@ async function shorten() {
 
   const trimmed = url.value.trim();
   if (!trimmed) {
-    error.value = "Please enter a URL first.";
+    error.value = "لطفاً یک آدرس وارد کنید.";
     return;
   }
 
@@ -29,7 +29,10 @@ async function shorten() {
     originalUrl.value = data.original_url;
     url.value = "";
   } catch (e: any) {
-    error.value = e?.data?.url?.[0] || "That doesn't look like a valid URL.";
+    console.error("shorten failed:", e);
+    error.value =
+      e?.data?.url?.[0] ||
+      "آدرس معتبر نیست یا مشکلی در سرور پیش اومد. دوباره امتحان کن.";
   } finally {
     loading.value = false;
   }
@@ -44,21 +47,51 @@ async function copyLink() {
 
 <template>
   <div class="page">
-    <div class="card">
-      <h1>koota<b>her</b>.ir</h1>
-      <p class="subtitle">Paste a long URL, get a short one to share.</p>
+    <div class="wrap">
+      <header class="brand">
+        <span class="logo">کوتاه<b>ر</b></span>
+        <span class="tagline">لینک‌های کوتاه، ساده و سریع</span>
+      </header>
 
-      <form class="form" @submit.prevent="shorten">
-        <input v-model="url" type="text" placeholder="https://example.com/a/long/url" :disabled="loading" />
-        <button type="submit" :disabled="loading">{{ loading ? "Shortening…" : "Shorten" }}</button>
-      </form>
+      <div class="card">
+        <h1>کوتاه کردن لینک</h1>
+        <p class="subtitle">آدرس طولانی رو وارد کن، یه لینک کوتاه برای اشتراک‌گذاری بگیر.</p>
 
-      <p v-if="error" class="error">{{ error }}</p>
+        <form class="form" @submit.prevent="shorten">
+          <input
+            v-model="url"
+            type="text"
+            dir="ltr"
+            inputmode="url"
+            autocomplete="off"
+            placeholder="https://example.com/a-very-long-link"
+            :disabled="loading"
+          />
+          <button type="submit" :disabled="loading">
+            <span v-if="loading" class="spinner"></span>
+            {{ loading ? "در حال کوتاه‌سازی…" : "کوتاه کن" }}
+          </button>
+        </form>
 
-      <div v-if="shortUrl" class="result">
-        <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
-        <button @click="copyLink">{{ copied ? "Copied!" : "Copy" }}</button>
+        <p v-if="error" class="error">{{ error }}</p>
+
+        <transition name="fade">
+          <div v-if="shortUrl" class="result">
+            <div class="result-row">
+              <a :href="shortUrl" target="_blank" rel="noopener" dir="ltr" class="short-link">{{ shortUrl }}</a>
+              <div class="result-actions">
+                <button class="icon-btn" @click="copyLink">
+                  {{ copied ? "کپی شد ✓" : "کپی" }}
+                </button>
+                <a class="icon-btn" :href="shortUrl" target="_blank" rel="noopener">باز کن</a>
+              </div>
+            </div>
+            <p class="original-hint" dir="ltr">→ {{ originalUrl }}</p>
+          </div>
+        </transition>
       </div>
+
+      <footer class="footer">kootaher.ir</footer>
     </div>
   </div>
 </template>
