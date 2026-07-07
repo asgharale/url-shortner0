@@ -202,3 +202,34 @@ button[type="submit"]:disabled {
   .form { flex-direction: column; }
   button[type="submit"] { justify-content: center; }
 }
+
+.domain-tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.domain-tab {
+  padding: 0.4rem 0.85rem;
+  border: 1.5px solid #dbe6e3;
+  border-radius: 999px;
+  background: #fafdfc;
+  color: #6b7a87;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+.domain-tab:hover {
+  border-color: #0d9488;
+  color: #0d9488;
+}
+
+.domain-tab.active {
+  background: #0d9488;
+  border-color: #0d9488;
+  color: #fff;
+}

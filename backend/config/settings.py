@@ -97,3 +97,7 @@ CSRF_TRUSTED_ORIGINS = os.environ.get(
 ).split(",")
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+ALLOWED_SHORT_DOMAINS = os.environ.get(
+    "ALLOWED_SHORT_DOMAINS", "kootaher.ir,mini2.ir,tny2.ir"
+).split(",")

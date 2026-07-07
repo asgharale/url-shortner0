@@ -1,12 +1,24 @@
 <script setup lang="ts">
 const config = useRuntimeConfig();
 
+const DOMAINS = ["kootaher.ir", "mini2.ir", "tny2.ir"];
+
 const url = ref("");
 const shortUrl = ref("");
 const originalUrl = ref("");
 const error = ref("");
 const loading = ref(false);
 const copied = ref(false);
+
+// Default to whichever domain the page is actually being viewed from,
+// falling back to the first option if it's not one of the three (e.g. localhost)
+const selectedDomain = ref(DOMAINS[0]);
+onMounted(() => {
+  const host = window.location.hostname.replace(/^www\./, "");
+  if (DOMAINS.includes(host)) {
+    selectedDomain.value = host;
+  }
+});
 
 async function shorten() {
   error.value = "";
@@ -23,22 +35,20 @@ async function shorten() {
   try {
     const data = await $fetch<{ short_url: string; original_url: string }>(
       `${config.public.apiBase}/shorten/`,
-      { method: "POST", body: { url: trimmed } }
+      { method: "POST", body: { url: trimmed, domain: selectedDomain.value } }
     );
     shortUrl.value = data.short_url;
     originalUrl.value = data.original_url;
     url.value = "";
   } catch (e: any) {
     console.error("shorten failed:", e);
-
     if (e?.data?.url) {
-      // Real validation error from the backend
       error.value = "آدرس وارد شده معتبر نیست. حتماً با http:// یا https:// شروع بشه.";
+    } else if (e?.data?.domain) {
+      error.value = "دامنه انتخاب‌شده معتبر نیست.";
     } else if (e?.status) {
-      // Backend responded, but with an unexpected error code
       error.value = `مشکلی در سرور پیش اومد (کد ${e.status}). دوباره امتحان کن.`;
     } else {
-      // Request never got a response at all — network/CORS/connection issue
       error.value = "اتصال به سرور برقرار نشد. اتصال اینترنت یا وضعیت سرویس رو چک کن.";
     }
   } finally {
@@ -63,7 +73,20 @@ async function copyLink() {
 
       <div class="card">
         <h1>کوتاه کردن لینک</h1>
-        <p class="subtitle">آدرس طولانی رو وارد کن، یه لینک کوتاه برای اشتراک‌گذاری بگیر.</p>
+        <p class="subtitle">آدرس طولانی رو وارد کن، دامنه دلخواه رو انتخاب کن، لینک کوتاه بگیر.</p>
+
+        <div class="domain-tabs" dir="ltr">
+          <button
+            v-for="d in DOMAINS"
+            :key="d"
+            type="button"
+            class="domain-tab"
+            :class="{ active: selectedDomain === d }"
+            @click="selectedDomain = d"
+          >
+            {{ d }}
+          </button>
+        </div>
 
         <form class="form" @submit.prevent="shorten">
           <input
@@ -98,7 +121,7 @@ async function copyLink() {
         </transition>
       </div>
 
-      <footer class="footer">kootaher.ir</footer>
+      <footer class="footer">kootaher.ir · mini2.ir · tny2.ir</footer>
     </div>
   </div>
 </template>

@@ -1,9 +1,12 @@
+from django.conf import settings
 from rest_framework import serializers
+
 from .models import Link
 
 
 class LinkCreateSerializer(serializers.Serializer):
     url = serializers.URLField(max_length=2048)
+    domain = serializers.CharField(required=False, allow_blank=True)
 
 
 class LinkResponseSerializer(serializers.ModelSerializer):
@@ -14,11 +17,12 @@ class LinkResponseSerializer(serializers.ModelSerializer):
         fields = ["original_url", "short_code", "short_url", "clicks", "created_at"]
 
     def get_short_url(self, obj):
+        domain = self.context.get("domain")
+        if domain:
+            return f"https://{domain}/{obj.short_code}"
+
         request = self.context.get("request")
         if request is not None:
-            # Uses whichever domain the request actually came in on
-            # (respects X-Forwarded-Proto from nginx for https)
             return request.build_absolute_uri(f"/{obj.short_code}")
-        # Fallback if there's no request in context (e.g. shell/management command)
-        from django.conf import settings
+
         return f"{settings.SITE_BASE_URL}/{obj.short_code}"

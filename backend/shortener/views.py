@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, redirect
 from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
@@ -15,11 +16,20 @@ def shorten_url(request):
     serializer = LinkCreateSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     original_url = serializer.validated_data["url"]
+    chosen_domain = serializer.validated_data.get("domain", "").strip()
+
+    if chosen_domain and chosen_domain not in settings.ALLOWED_SHORT_DOMAINS:
+        return Response(
+            {"domain": [f"'{chosen_domain}' is not an allowed domain."]},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
     link, _created = Link.objects.get_or_create(original_url=original_url)
 
     return Response(
-        LinkResponseSerializer(link, context={"request": request}).data,
+        LinkResponseSerializer(
+            link, context={"request": request, "domain": chosen_domain or None}
+        ).data,
         status=status.HTTP_201_CREATED,
     )
 
