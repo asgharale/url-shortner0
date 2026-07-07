@@ -37,6 +37,6 @@ def shorten_url(request):
 
 def redirect_short_code(request, short_code):
     link = get_object_or_404(Link, short_code=short_code)
-    destination = link.original_url
+    destination = link.destination_url
     Link.objects.filter(pk=link.pk).update(clicks=F("clicks") + 1)
     return redirect(destination)

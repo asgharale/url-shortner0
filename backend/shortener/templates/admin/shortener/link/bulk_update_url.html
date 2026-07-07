@@ -1,11 +1,15 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
-<h1>Update original URL for {{ links|length }} selected link(s)</h1>
+<h1>Set override URL for {{ links|length }} selected link(s)</h1>
+
+<p>Setting a URL here takes priority over each link's original destination. Leave the field empty and submit to clear the override instead (original destination resumes).</p>
+
 <ul>
   {% for link in links %}
-    <li><strong>/{{ link.short_code }}</strong> currently points to: {{ link.original_url }}</li>
+    <li><strong>/{{ link.short_code }}</strong> — original: {{ link.original_url }}{% if link.my_url %} — currently overridden to: {{ link.my_url }}{% endif %}</li>
   {% endfor %}
 </ul>
+
 <form method="post">
   {% csrf_token %}
   {% for link in links %}
@@ -14,10 +18,10 @@
   <input type="hidden" name="action" value="bulk_update_url">
   <input type="hidden" name="apply" value="yes">
   <p>
-    <label for="id_new_url"><strong>New destination URL</strong>:</label><br>
-    <input type="url" id="id_new_url" name="new_url" size="60" required>
+    <label for="id_new_url"><strong>Override URL</strong> (leave empty to clear):</label><br>
+    <input type="url" id="id_new_url" name="new_url" size="60">
   </p>
-  <input type="submit" value="Update URLs" class="default">
+  <input type="submit" value="Apply" class="default">
   <a href="{% url 'admin:shortener_link_changelist' %}" style="margin-left: 10px;">Cancel</a>
 </form>
 {% endblock %}
