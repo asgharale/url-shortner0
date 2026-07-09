@@ -9,14 +9,15 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-secret-key-change-in-produ
 DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = [
-    "mini2.ir",
-    "www.mini2.ir",
-    "tny2.ir",
-    "www.tny2.ir",
-    "localhost",
-    "127.0.0.1",
+    "mini2.ir", "www.mini2.ir",
+    "tny2.ir", "www.tny2.ir",
+    "sml2.ir", "www.sml2.ir",
+    "shrtlnk.ir", "www.shrtlnk.ir",
+    "linksml.ir", "www.linksml.ir",
+    "charkhooneh2.ir", "www.charkhooneh2.ir",
+    "kootaher.ir", "www.kootaher.ir",
+    "localhost", "127.0.0.1",
 ]
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
