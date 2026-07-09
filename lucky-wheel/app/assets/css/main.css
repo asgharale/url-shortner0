@@ -1,0 +1,60 @@
+:root {
+  --ink-900: #150a29;      /* deepest background */
+  --ink-800: #1b1030;      /* base background */
+  --ink-700: #2a1a48;      /* card / raised surface */
+  --gold: #f2b705;         /* rim, primary CTA */
+  --gold-bright: #ffd23f;
+  --pink: #ff3d7f;
+  --teal: #2ee6d6;
+  --cream: #fcf7e8;        /* primary text on dark */
+  --cream-dim: #cfc4e8;    /* secondary text on dark */
+
+  --font-display: "B Zar Bold_0", sans-serif;
+  --font-body: "B Zar ‌Bold_0", sans-serif;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+}
+
+@font-face {
+    font-family: "B Zar Bold_0";
+    src: url("/fonts/B Zar Bold_0.ttf") format("truetype");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "B Zar_0";
+    src: url("/fonts/B Zar_0.ttf") format("truetype");
+    font-weight: 400;
+}
+body {
+  margin: 0;
+  font-family: "B Zar_0", sans-serif;
+  direction: rtl;
+  text-align: center;
+  color: var(--cream);
+  background: var(--ink-800);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: "B Zar Bold_0", sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+html{
+  direction: rtl;
+}

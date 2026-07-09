@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import admin, messages
 from django.shortcuts import render
 
-from .models import Link
+from .models import Link, ProLink
 
 
 class BulkUrlForm(forms.Form):
@@ -13,13 +13,13 @@ class BulkUrlForm(forms.Form):
     )
 
 
-@admin.register(Link)
-class LinkAdmin(admin.ModelAdmin):
+class BaseLinkAdmin(admin.ModelAdmin):
     list_display = ("short_code", "original_url", "my_url", "effective_destination", "clicks", "created_at")
     search_fields = ("short_code", "original_url", "my_url")
     list_filter = ("created_at",)
     ordering = ("-clicks",)
     actions = ["bulk_update_url"]
+    bulk_template = "admin/shortener/link/bulk_update_url.html"
 
     @admin.display(description="Redirects to")
     def effective_destination(self, obj):
@@ -30,16 +30,35 @@ class LinkAdmin(admin.ModelAdmin):
         if request.POST.get("apply") == "yes":
             form = BulkUrlForm(request.POST)
             if form.is_valid():
-                new_url = form.cleaned_data["new_url"]  # "" if left blank
+                new_url = form.cleaned_data["new_url"]
                 updated = queryset.update(my_url=new_url)
-                if new_url:
-                    msg = f"Set override URL for {updated} link(s)."
-                else:
-                    msg = f"Cleared override for {updated} link(s) — they'll redirect to original_url again."
+                msg = (
+                    f"Set override URL for {updated} link(s)."
+                    if new_url
+                    else f"Cleared override for {updated} link(s)."
+                )
                 self.message_user(request, msg, messages.SUCCESS)
                 return None
         return render(
             request,
-            "admin/shortener/link/bulk_update_url.html",
+            self.bulk_template,
             context={"links": queryset, "opts": self.model._meta, "title": "Bulk set override URL"},
         )
+
+
+@admin.register(Link)
+class LinkAdmin(BaseLinkAdmin):
+    pass
+
+
+@admin.register(ProLink)
+class ProLinkAdmin(BaseLinkAdmin):
+    pass
+
+
+from .models import WheelRedirect
+
+@admin.register(WheelRedirect)
+class WheelRedirectAdmin(admin.ModelAdmin):
+    list_display = ("label", "url", "created_at")
+    ordering = ("-created_at",)
