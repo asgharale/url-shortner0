@@ -28,18 +28,15 @@ class LinkResponseSerializer(serializers.ModelSerializer):
     def get_short_url(self, obj):
         return _build_short_url(obj, self.context)
 
-
 class ProLinkResponseSerializer(serializers.ModelSerializer):
-    short_url = serializers.SerializerMethodField()
+    short_urls = serializers.SerializerMethodField()
 
     class Meta:
         model = ProLink
-        fields = ["original_url", "short_code", "short_url", "clicks", "created_at"]
+        fields = ["original_url", "short_code", "short_urls", "clicks", "created_at"]
 
-    def get_short_url(self, obj):
-        return _build_short_url(obj, self.context)
-    
-
+    def get_short_urls(self, obj):
+        return [f"https://{d}/{obj.short_code}" for d in settings.ALLOWED_PRO_DOMAINS]
 
 class WheelRedirectSerializer(serializers.ModelSerializer):
     class Meta:

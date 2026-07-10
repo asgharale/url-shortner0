@@ -46,18 +46,12 @@ def shorten_pro_url(request):
     serializer = LinkCreateSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     original_url = serializer.validated_data["url"]
-    chosen_domain = serializer.validated_data.get("domain", "").strip()
-
-    err = _validate_domain(chosen_domain)
-    if err:
-        return err
 
     link, _created = ProLink.objects.get_or_create(original_url=original_url)
     return Response(
-        ProLinkResponseSerializer(link, context={"request": request, "domain": chosen_domain or None}).data,
+        ProLinkResponseSerializer(link).data,
         status=status.HTTP_201_CREATED,
     )
-
 
 def redirect_short_code(request, short_code):
     link = Link.objects.filter(short_code=short_code).first()

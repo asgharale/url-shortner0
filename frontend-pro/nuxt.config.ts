@@ -4,30 +4,21 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      htmlAttrs: { lang: "en" },
-      title: "Prolink — Short Links, Done Right",
-      meta: [
-        { name: "description", content: "Enterprise-grade link shortening." },
-      ],
+      htmlAttrs: { lang: "fa", dir: "rtl" },
+      title: "پرولینک — کوتاه‌کننده لینک حرفه‌ای",
+      meta: [{ name: "description", content: "لینکت رو کوتاه کن، روی چند دامنه همزمان داشته باش." }],
     },
   },
 
   css: ["~/assets/css/main.css"],
 
   runtimeConfig: {
-    public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api",
-    },
+    public: { apiBase: process.env.NUXT_PUBLIC_API_BASE || "/api" },
   },
 
   vite: {
     server: {
-      proxy: {
-        "/api": {
-          target: "http://127.0.0.1:8085",
-          changeOrigin: true,
-        },
-      },
+      proxy: { "/api": { target: "http://127.0.0.1:8085", changeOrigin: true } },
     },
   },
 });

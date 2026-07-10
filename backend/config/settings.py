@@ -14,7 +14,7 @@ ALLOWED_HOSTS = [
     "sml2.ir", "www.sml2.ir",
     "shrtlnk.ir", "www.shrtlnk.ir",
     "linksml.ir", "www.linksml.ir",
-    "charkhooneh2.ir", "www.charkhooneh2.ir",
+    "charkhoon2.ir", "www.charkhoon2.ir",
     "kootaher.ir", "www.kootaher.ir",
     "localhost", "127.0.0.1",
 ]
@@ -78,25 +78,38 @@ STATIC_URL = "/static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Fallback only — actual short links are built per-request domain (see serializers.py)
-SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://kootaher.ir")
+SITE_BASE_URL = os.environ.get("SITE_BASE_URL", "https://mini2.ir")
 
 CORS_ALLOWED_ORIGINS = os.environ.get(
     "CORS_ALLOWED_ORIGINS",
-    "https://kootaher.ir,https://www.kootaher.ir,"
     "https://mini2.ir,https://www.mini2.ir,"
-    "https://tny2.ir,https://www.tny2.ir",
+    "https://tny2.ir,https://www.tny2.ir,"
+    "https://sml2.ir,https://www.sml2.ir,"
+    "https://shrtlnk.ir,https://www.shrtlnk.ir,"
+    "https://linksml.ir,https://www.linksml.ir,"
+    "https://kootaher.ir,https://www.kootaher.ir,"
+    "https://charkhoon2.ir,https://www.charkhoon2.ir",
 ).split(",")
 
 CSRF_TRUSTED_ORIGINS = os.environ.get(
     "CSRF_TRUSTED_ORIGINS",
-    "https://kootaher.ir,https://www.kootaher.ir,"
     "https://mini2.ir,https://www.mini2.ir,"
-    "https://tny2.ir,https://www.tny2.ir",
+    "https://tny2.ir,https://www.tny2.ir,"
+    "https://sml2.ir,https://www.sml2.ir,"
+    "https://shrtlnk.ir,https://www.shrtlnk.ir,"
+    "https://linksml.ir,https://www.linksml.ir,"
+    "https://kootaher.ir,https://www.kootaher.ir,"
+    "https://charkhoon2.ir,https://www.charkhoon2.ir",
 ).split(",")
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+# Used by the ORIGINAL shortener's frontend domain-tab picker
 ALLOWED_SHORT_DOMAINS = os.environ.get(
-    "ALLOWED_SHORT_DOMAINS", "kootaher.ir,mini2.ir,tny2.ir"
+    "ALLOWED_SHORT_DOMAINS", "mini2.ir,tny2.ir"
+).split(",")
+
+# Used by the PRO shortener — every short link is shown across all 4 of these at once
+ALLOWED_PRO_DOMAINS = os.environ.get(
+    "ALLOWED_PRO_DOMAINS", "sml2.ir,shrtlnk.ir,linksml.ir,kootaher.ir"
 ).split(",")
