@@ -119,3 +119,25 @@ button[type="submit"]:disabled { opacity: 0.6; cursor: not-allowed; }
 .fade-enter-from { opacity: 0; transform: translateY(-6px); }
 
 @media (max-width: 480px) { .form { flex-direction: column; } }
+
+.page {
+  background: linear-gradient(160deg, #fff4ec 0%, #ffe9dc 100%);
+}
+
+.logo { color: #d9480f; }
+.tagline { color: #a68a7a; }
+
+.card { box-shadow: 0 10px 40px rgba(217, 72, 15, 0.1); }
+
+input:focus { border-color: #d9480f; }
+
+button[type="submit"] { background: #d9480f; }
+button[type="submit"]:hover:not(:disabled) { background: #b83d0d; }
+
+.short-link, .icon-btn { color: #d9480f; }
+.icon-btn { border-color: #d9480f; }
+
+.result { background: #fff4ec; border-color: #ffd9c2; }
+
+.domain-tab:hover { border-color: #d9480f; color: #d9480f; }
+.domain-tab.active { background: #d9480f; border-color: #d9480f; }
