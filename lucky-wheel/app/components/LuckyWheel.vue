@@ -32,7 +32,7 @@ const prizes: Prize[] = [
   { label: '0.00008 \nبیتکوین',    sub: 'code',    fill: 'var(--pink)',  weight: 12 },
   { label: '100 سوت طلا',  sub: '0.1 gr gold', fill: 'var(--gold)', weight: 8 },
   { label: '5٪ تخفیف\n خرید طلا',    sub: 'code',    fill: 'var(--teal)',  weight: 8 },
-  { label: 'جایزه',  sub: 'code',    fill: 'var(--pink)',  weight: 14 },
+  { label: 'پوچ',  sub: 'code',    fill: 'var(--pink)',  weight: 14 },
   { label: '8٪ تخفیف\n خرید طلا',    sub: 'code',    fill: 'var(--teal)',  weight: 16 },
   { label: '500 سوت طلا',    sub: '0.5 gr gold', fill: 'var(--gold)',  weight: 8 }
 ]

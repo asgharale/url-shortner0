@@ -21,6 +21,10 @@
 
       <LuckyWheel />
 
+      <p class="kicker">
+      برای شرکت در گردونه های روزانه بعدی در <a href="https://eitaa.com/Geymat_onliin1">کانال ایتا</a> عضو بشین
+      </p>
+
       <p class="fine-print">
         هر کاربر میتونه یک بار جایزه دریافت کنه!
       </p>
