@@ -21,8 +21,18 @@
 
       <LuckyWheel />
 
-      <p class="kicker">
-      برای شرکت در گردونه های روزانه بعدی در <a href="https://eitaa.com/Geymat_onliin1">کانال ایتا</a> عضو بشین
+      <br>
+      <p class="channel-text">
+        برای شرکت در گردونه های روزانه بعدی در
+        <a
+          href="https://eitaa.com/Geymat_onliin1"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="channel-link"
+        >
+          کانال ایتا
+        </a>
+        عضو بشین
       </p>
 
       <p class="fine-print">
@@ -120,5 +130,32 @@ h1 {
   padding: 1.5rem;
   font-size: 0.78rem;
   color: rgba(207, 196, 232, 0.5);
+}
+.channel-text {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: var(--cream);
+  font-weight: 500;
+  line-height: 1.8;
+}
+.channel-link::after {
+  content: "↗";
+  margin-right: 0.35rem;
+  font-size: 0.9em;
+}
+.channel-link {
+  display: inline-block;
+  background: linear-gradient(135deg, #f2b705, #ffcf33);
+  color: #111;
+  padding: 0.55rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  margin: 0 0.25rem;
+  box-shadow: 0 6px 18px rgba(242, 183, 5, 0.35);
+}
+
+.channel-link:hover {
+  transform: translateY(-2px);
 }
 </style>
